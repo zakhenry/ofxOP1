@@ -41,7 +41,12 @@ int white = 0xFFFFFF;
 
 int keyMap[] = {53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 54, 56, 58, 61, 63, 66, 68, 70, 73, 75};
 
-OP1::OP1(){ // constructor
+//void OP1(OP1Screen* screen): myScreen(screen){
+//    
+//}
+
+//OP1::OP1(){ // constructor
+OP1::OP1(IScreen* screen): myScreen(screen){
     
     cout << "OP-1 created\n";
     
@@ -414,6 +419,7 @@ void OP1::draw(){ //all is drawn as 1px = 1mm, then scaled up
         ofPushMatrix();
         ofPushStyle();
         ofTranslate(frameWidth+keySpan(4)+keySpacing*2, frameWidth+keySpacing);
+        drawScreenBorder();
         drawScreen();
         ofPopStyle();
         ofPopMatrix();
@@ -1180,7 +1186,9 @@ void OP1::handleKeystrokes(){
     }
 }
 
-void OP1::drawScreen(){
+
+
+void OP1::drawScreenBorder(){
     ofSetRectMode(OF_RECTMODE_CORNER);
     
     ofPushStyle();
@@ -1190,39 +1198,45 @@ void OP1::drawScreen(){
     roundedRect(getScreenWidth(), getScreenHeight(), 0.5);
     ofPopStyle();
     
-	// draw the left:
-    ofNoFill();
-    ofBeginShape();
-	ofSetHexColor(blue);
-	for (int i = 0; i < 256; i++){
-        float val = left[i]*20.0f;
-        if (val>5){
-            val = 5;
-            ofSetHexColor(orange);
-        }else if (val<-5){
-            val = -5;
-            ofSetHexColor(orange);
-        }
-		ofVertex(5+(float)i/5,10+val);
-	}
-    ofEndShape();
-    
-    ofSetHexColor(blue);
-    ofBeginShape();
-	for (int i = 0; i < 256; i++){
-        float val = right[i]*20.0f;
-        if (val>5){
-            val = 5;
-            ofSetHexColor(orange);
-        }else if (val<-5){
-            val = -5;
-            ofSetHexColor(orange);
-        }
-        ofVertex(5+(float)i/5,20+val);
-	}
-    ofEndShape();
+//    myScreen->drawScreen();
     
 }
+
+
+//void OP1::drawScreen(){
+//	// draw the left:
+//    ofNoFill();
+//    ofBeginShape();
+//	ofSetHexColor(blue);
+//	for (int i = 0; i < 256; i++){
+//        float val = left[i]*20.0f;
+//        if (val>5){
+//            val = 5;
+//            ofSetHexColor(orange);
+//        }else if (val<-5){
+//            val = -5;
+//            ofSetHexColor(orange);
+//        }
+//		ofVertex(5+(float)i/5,10+val);
+//	}
+//    ofEndShape();
+//    
+//    ofSetHexColor(blue);
+//    ofBeginShape();
+//	for (int i = 0; i < 256; i++){
+//        float val = right[i]*20.0f;
+//        if (val>5){
+//            val = 5;
+//            ofSetHexColor(orange);
+//        }else if (val<-5){
+//            val = -5;
+//            ofSetHexColor(orange);
+//        }
+//        ofVertex(5+(float)i/5,20+val);
+//	}
+//    ofEndShape();
+//    
+//}
 
 void OP1::audioReceived (float * input, int bufferSize, int nChannels){	
 	// samples are "interleaved"

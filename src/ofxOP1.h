@@ -58,9 +58,18 @@ typedef struct controlButton{
     
 } controlButton;
 
+//class IScreen
+//{
+//public:
+//    // Defines an interface named drawScreen
+//    virtual void drawScreen() = 0;
+//};
+
 class OP1 : public ofBaseApp{
 	
 	//private
+    
+    
     
     
     float posX, posY, width;
@@ -82,9 +91,8 @@ class OP1 : public ofBaseApp{
     void drawKnobs();
     void drawKnob(int knobNumber);
     
-    void drawScreen();
-    float getScreenHeight();
-    float getScreenWidth();
+    void drawScreenBorder();
+    
     
     void quadraticBezierVertex(float cpx, float cpy, float x, float y, float prevX, float prevY);
     void roundedRect(float w, float h, float r);
@@ -140,13 +148,26 @@ class OP1 : public ofBaseApp{
     float * left;
     float * right;
     
+//    IScreen* myScreen;
+    
     public:
+    
+//    OP1(IScreen* screen);//constructor
     
     OP1(); //constructor
     ~OP1(); //destructor
     
+    
+    
     void draw();
     void update(){};
+    
+//    void drawScreen();
+    
+    virtual void drawScreen();
+    
+    float getScreenHeight();
+    float getScreenWidth();
     
     ofEvent<midiPacket> midiEvent;
     void setDimensions(int x, int y, int width);
