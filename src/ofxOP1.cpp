@@ -31,13 +31,7 @@
 #include "ofxOP1.h"
 
 //colours grabbed from the pantone chart on the main site
-int blue = 0x0098D4;
-int green = 0x01BB00;
-int lightGrey = 0xDEE8E9;
-int orange = 0xFE4F00;
-int darkGrey = 0xC3C9C9;
-int black = 0x000000;
-int white = 0xFFFFFF;
+
 
 int keyMap[] = {53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 54, 56, 58, 61, 63, 66, 68, 70, 73, 75};
 
@@ -51,6 +45,16 @@ OP1::OP1(){ // constructor
     cout << "OP-1 created\n";
     
     ofSetDataPathRoot("../Resources/");
+    
+    blue = 0x0098D4;
+    green = 0x01BB00;
+    lightGrey = 0xDEE8E9;
+    orange = 0xFE4F00;
+    darkGrey = 0xC3C9C9;
+    black = 0x000000;
+    white = 0xFFFFFF;
+    
+    ofSetCircleResolution(100);
     
     ofFilePath filePath;
     cout << "current working directory is: "<<filePath.getCurrentWorkingDirectory() << endl;
@@ -429,7 +433,9 @@ void OP1::draw(){ //all is drawn as 1px = 1mm, then scaled up
     
     ofPopMatrix();
     
+    ofPushMatrix();
     ofTranslate(cursorX, cursorY);
+    ofPopMatrix();
     
 }
 
@@ -481,7 +487,6 @@ void OP1::drawFrame(){
     ofPushMatrix();
         ofTranslate(274.5, 82);
         ofScale(0.06, 0.06);
-        ofSetHexColor(0xaaaaaa); //this actually colours the png!
         op1Logo.draw(0,0);
 //        ofRotateZ(-90);
 //        ofScale(0.07, 0.07);

@@ -63,7 +63,7 @@ class OP1 : public ofBaseApp{
 	//private
     
     
-    
+    int blue, green, lightGrey, orange, darkGrey, black, white;
     
     float posX, posY, width;
     float cursorX, cursorY;
