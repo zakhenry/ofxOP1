@@ -58,13 +58,6 @@ typedef struct controlButton{
     
 } controlButton;
 
-//class IScreen
-//{
-//public:
-//    // Defines an interface named drawScreen
-//    virtual void drawScreen() = 0;
-//};
-
 class OP1 : public ofBaseApp{
 	
 	//private
@@ -147,12 +140,9 @@ class OP1 : public ofBaseApp{
     
     float * left;
     float * right;
-    
-//    IScreen* myScreen;
+
     
     public:
-    
-//    OP1(IScreen* screen);//constructor
     
     OP1(); //constructor
     ~OP1(); //destructor
@@ -162,9 +152,7 @@ class OP1 : public ofBaseApp{
     void draw();
     void update(){};
     
-//    void drawScreen();
-    
-    virtual void drawScreen();
+    void drawScreen();
     
     float getScreenHeight();
     float getScreenWidth();
