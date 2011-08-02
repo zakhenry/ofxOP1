@@ -41,10 +41,6 @@ int white = 0xFFFFFF;
 
 int keyMap[] = {53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 54, 56, 58, 61, 63, 66, 68, 70, 73, 75};
 
-//void OP1(OP1Screen* screen): myScreen(screen){
-//    
-//}
-
 //OP1::OP1(){ // constructor
 OP1::OP1(IScreen* screen): myScreen(screen){
     

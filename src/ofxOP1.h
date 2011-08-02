@@ -58,12 +58,12 @@ typedef struct controlButton{
     
 } controlButton;
 
-//class IScreen
-//{
-//public:
-//    // Defines an interface named drawScreen
-//    virtual void drawScreen() = 0;
-//};
+class IScreen
+{
+public:
+    // Defines an interface named drawScreen
+    virtual void drawScreen() = 0;
+};
 
 class OP1 : public ofBaseApp{
 	
@@ -148,13 +148,13 @@ class OP1 : public ofBaseApp{
     float * left;
     float * right;
     
-//    IScreen* myScreen;
+    IScreen* myScreen;
     
     public:
     
-//    OP1(IScreen* screen);//constructor
+    OP1(IScreen* screen);//constructor
     
-    OP1(); //constructor
+//    OP1(); //constructor
     ~OP1(); //destructor
     
     
