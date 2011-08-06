@@ -121,7 +121,7 @@ class OP1 : public ofBaseApp{
     ofxMidiOut midiOut;
     
     void setEncoder(int encoder, float angle);
-    void incrementEncoder(int encoder, bool cw);
+    void incrementEncoder(int encoder, bool cw, string &encoderName);
     
     void buttonEvent (int key, bool keydown, string &keyName);
     void keyEvent (int key, bool keydown, string &keyName);

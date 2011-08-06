@@ -313,25 +313,25 @@ OP1::OP1(){ // constructor
     controlButtons.push_back(shift);
     
     controlButton encoder_blue;
-    encoder_blue.name = "Blue Encoder";
+    encoder_blue.name = "encoder_blue";
     encoder_blue.midiId = 64;
     encoder_blue.graphicId = -1;
     controlButtons.push_back(encoder_blue);
     
     controlButton encoder_green;
-    encoder_green.name = "Green Encoder";
+    encoder_green.name = "encoder_green";
     encoder_green.midiId = 65;
     encoder_green.graphicId = -1;
     controlButtons.push_back(encoder_green);
     
     controlButton encoder_white;
-    encoder_white.name = "White Encoder";
+    encoder_white.name = "encoder_white";
     encoder_white.midiId = 66;
     encoder_white.graphicId = -1;
     controlButtons.push_back(encoder_white);
     
     controlButton encoder_orange;
-    encoder_orange.name = "Orange Encoder";
+    encoder_orange.name = "encoder_orange";
     encoder_orange.midiId = 67;
     encoder_orange.graphicId = -1;
     controlButtons.push_back(encoder_orange);
@@ -829,24 +829,28 @@ void OP1::setEncoder(int encoder, float angle){
     
 }
 
-void OP1::incrementEncoder(int encoder, bool cw){
+void OP1::incrementEncoder(int encoder, bool cw, string &encoderName){
     
     
     switch (encoder) {
         case 1:
             bEncoder = cw ? bEncoder+((float)1/32):bEncoder-((float)1/32);
+            encoderName = "encoder_blue";
             break;
             
         case 2:
             gEncoder = cw ? gEncoder+((float)1/32):gEncoder-((float)1/32);
+            encoderName = "encoder_green";
             break;
             
         case 3:
             wEncoder = cw ? wEncoder+((float)1/32):wEncoder-((float)1/32);
+            encoderName = "encoder_white";
             break;
             
         case 4:
             oEncoder = cw ? oEncoder+((float)1/32):oEncoder-((float)1/32);
+            encoderName = "encoder_orange";
             break;
             
         default:
@@ -874,6 +878,7 @@ void OP1::buttonEvent(int button, bool buttonDown, string& buttonName){
     for (int i=0; i<=controlButtons.size(); i++){
 //        cout << "controlButtons[i].midiId is "<<controlButtons[i].midiId<<"\n";
         if (controlButtons[i].midiId==button){
+            buttonName = controlButtons[i].name;
 //            cout << "button with index "<<i<<"matches midi button "<<button<<"\n";
             buttonNum = i;
             break;
@@ -1034,7 +1039,7 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
     
     if (status == 176){ //control input
         if (byteOne<=4){ //encoder
-            incrementEncoder(byteOne, byteTwo==1);
+            incrementEncoder(byteOne, byteTwo==1, elementName);
             event = (byteTwo==1)?"encoder_cw":"encoder_ccw";
         }else{
             buttonEvent(byteOne, byteTwo==127, elementName); //buttonid buttondown
