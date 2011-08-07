@@ -395,13 +395,13 @@ void OP1::draw(){ //all is drawn as 1px = 1mm, then scaled up
     
     if(!op1Connected){
         if (nextConnectionAttempt<ofGetSystemTime()){
-            cout << "attempting reconnection\n";
+//            cout << "attempting reconnection\n";
             op1Connected = connectToExternalOP1();
             nextConnectionAttempt = ofGetSystemTime()+5000; //retry every 5 seconds
         }else{
-            cout << "reconnecting in"<<nextConnectionAttempt-ofGetSystemTime()<<" us\n";
+//            cout << "reconnecting in"<<nextConnectionAttempt-ofGetSystemTime()<<" us\n";
         }
-        cout <<"nextConnectionAttempt is: "<<nextConnectionAttempt<<endl;
+//        cout <<"nextConnectionAttempt is: "<<nextConnectionAttempt<<endl;
     }
     
     ofPushMatrix();
