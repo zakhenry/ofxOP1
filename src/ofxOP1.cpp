@@ -393,6 +393,8 @@ void OP1::setDimensions(int _x, int _y, int _width){
 
 void OP1::draw(){ //all is drawn as 1px = 1mm, then scaled up
     
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    
     if(!op1Connected){
         if (nextConnectionAttempt<ofGetSystemTime()){
 //            cout << "attempting reconnection\n";
@@ -424,7 +426,7 @@ void OP1::draw(){ //all is drawn as 1px = 1mm, then scaled up
         ofPushStyle();
         ofTranslate(frameWidth+keySpan(4)+keySpacing*2, frameWidth+keySpacing);
         drawScreenBorder();
-        drawScreen();
+//        drawOP1Screen();
         ofPopStyle();
         ofPopMatrix();
     
@@ -445,6 +447,19 @@ float OP1::getScreenHeight(){
 
 float OP1::getScreenWidth(){
     return keySpan(4);
+}
+
+void OP1::getScreenDimensions(float &x, float&y, float&w, float&h){
+    
+//    x = posX;
+    
+    x = posX-(((284/2)-(frameWidth+keySpan(4)+keySpacing*2))*scaleFactor);
+    y = posY-(((102/2)-(frameWidth+keySpacing))*scaleFactor);
+    
+    w = getScreenWidth()*scaleFactor;
+    h = getScreenHeight()*scaleFactor;
+    
+    return;
 }
 
 
@@ -1208,13 +1223,15 @@ void OP1::drawScreenBorder(){
     roundedRect(getScreenWidth(), getScreenHeight(), 0.5);
     ofPopStyle();
     
-    drawScreen();
+//    cout << "drawOP1Screen() called"<<endl;
+    drawOP1Screen();
     
 }
 
 
-void OP1::drawScreen(){
+void OP1::drawOP1Screen(){
 	// draw the left:
+    
     ofNoFill();
     ofBeginShape();
 	ofSetHexColor(blue);
@@ -1250,10 +1267,10 @@ void OP1::drawScreen(){
 
 void OP1::audioReceived (float * input, int bufferSize, int nChannels){	
 	// samples are "interleaved"
-	for (int i = 0; i < bufferSize; i++){
+	/*for (int i = 0; i < bufferSize; i++){
 		left[i] = input[i*2];
 		right[i] = input[i*2+1];
-	}
+	}*/
     
 //    cout <<"audio recieved ["<<left[128]<<"]\n";
 	

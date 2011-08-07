@@ -63,7 +63,7 @@ class OP1 : public ofBaseApp{
 	//private
     
     
-    int blue, green, lightGrey, orange, darkGrey, black, white;
+    
     
     float posX, posY, width;
     float cursorX, cursorY;
@@ -147,15 +147,18 @@ class OP1 : public ofBaseApp{
     OP1(); //constructor
     ~OP1(); //destructor
     
-    
+    int blue, green, lightGrey, orange, darkGrey, black, white;
     
     void draw();
     void update(){};
     
-    void drawScreen();
+//    void drawScreen();
+    void drawOP1Screen();
     
     float getScreenHeight();
     float getScreenWidth();
+    
+    void getScreenDimensions(float &x, float&y, float&w, float&h);
     
     ofEvent<midiPacket> midiEvent;
     void setDimensions(int x, int y, int width);
