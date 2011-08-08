@@ -57,7 +57,7 @@ OP1::OP1(){ // constructor
     ofSetCircleResolution(100);
     
     ofFilePath filePath;
-    cout << "current working directory is: "<<filePath.getCurrentWorkingDirectory() << endl;
+//    cout << "current working directory is: "<<filePath.getCurrentWorkingDirectory() << endl;
     
     keySpacing = 0.7;
     frameWidth = 4.5;
@@ -358,7 +358,7 @@ bool OP1::connectToExternalOP1(){
         if (found!=string::npos){
             op1Port = portNum;
         }
-        cout << "port "<<portNum<<" is labelled "<<midiIn->portNames[portNum]<<endl;
+//        cout << "port "<<portNum<<" is labelled "<<midiIn->portNames[portNum]<<endl;
     }
     
     if (op1Port>-1) {
@@ -368,7 +368,7 @@ bool OP1::connectToExternalOP1(){
         midiIn->openPort(op1Port);
         midiIn->setVerbose(false);
         ofAddListener(midiIn->newMessageEvent, this, &OP1::newMessageEvent);
-        cout << "OP1 found, listing ports\n";
+//        cout << "OP1 found, listing ports\n";
         midiIn->listPorts();
         
         return true;
@@ -878,9 +878,9 @@ void OP1::incrementEncoder(int encoder, bool cw, string &encoderName){
 void OP1::changeButtonStatus(int buttonNum, bool buttonDown){
     if (buttonNum>=0){
         buttonStatus[buttonNum] = buttonDown;
-        cout << "button ["<<buttonNum<<"] status changed to ["<<buttonDown<<"]\n";
+//        cout << "button ["<<buttonNum<<"] status changed to ["<<buttonDown<<"]\n";
     }else{
-        cout <<"button not found\n";
+//        cout <<"button not found\n";
     }
     
 }
@@ -1019,7 +1019,7 @@ void OP1::keyEvent(int key, bool keyDown, string& keyName){
             break;
            
         default:
-            cout <<"key not found\n";
+//            cout <<"key not found\n";
             break;
     }
     
@@ -1035,7 +1035,7 @@ void OP1::changeKeyStatus(int keyNum, bool keyDown){
         keyStatus[keyNum] = keyDown;
 //        cout << "key ["<<keyNum<<"] status changed to ["<<keyDown<<"]\n";
     }else{
-        cout <<"key not found\n";
+//        cout <<"key not found\n";
     }
     
 }
@@ -1061,14 +1061,14 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
             event = (byteTwo==127)?"button_down":"button_up";
         }
     }else{ //keyboard input?
-        while (byteOne>64) { //octave shifting
-            byteOne-=24;
-            
-        }
-        
-        while (byteOne<53) { //octave shifting
-            byteOne+=24;
-        }
+//        while (byteOne>64) { //octave shifting
+//            byteOne-=24;
+//            
+//        }
+//        
+//        while (byteOne<53) { //octave shifting
+//            byteOne+=24;
+//        }
         
         keyEvent(byteOne, status==144, elementName); //keyid keydown
         event = (status==144)?"key_down":"key_up";
@@ -1083,7 +1083,7 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
     
     ofNotifyEvent(midiEvent, newPacket, this);
     
-        cout << "midi packet: port ["<<port<<"], channel ["<<channel<<"], status ["<<status<<"], byteOne ["<<byteOne<<"], byte2 ["<<byteTwo<<"], timestamp ["<<timestamp<<"]\n";
+//        cout << "midi packet: port ["<<port<<"], channel ["<<channel<<"], status ["<<status<<"], byteOne ["<<byteOne<<"], byte2 ["<<byteTwo<<"], timestamp ["<<timestamp<<"]\n";
 
 }
 
@@ -1100,15 +1100,6 @@ void OP1::newVirtualMessageEvent (ofxMidiEventArgs & args){
     string elementName;
     
     int keyId = byteOne;
-
-    while (keyId>64) { //octave shifting
-        keyId-=24;
-        
-    }
-    
-    while (keyId<53) { //octave shifting
-        keyId+=24;
-    }
     
 //    keyEvent(byteOne, status==144, elementName); //keyid keydown
     event = (status==144)?"key_down":"key_up";
