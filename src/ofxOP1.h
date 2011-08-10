@@ -158,13 +158,15 @@ class OP1 : public ofBaseApp{
     float getScreenHeight();
     float getScreenWidth();
     
+    int midiToKeyId(int midiId, string &keyName);
+    
     void getScreenDimensions(float &x, float&y, float&w, float&h);
     
     ofEvent<midiPacket> midiEvent;
     void setDimensions(int x, int y, int width);
     
-    void sendNoteOn(int noteId, int keyId);
-    void sendNoteOff(int noteId, int keyId);
+    void sendNoteOn(int noteId);
+    void sendNoteOff(int noteId);
 
     void mouseDown(int x, int y);
     void mouseUp();

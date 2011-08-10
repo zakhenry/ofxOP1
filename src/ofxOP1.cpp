@@ -907,6 +907,134 @@ void OP1::buttonEvent(int button, bool buttonDown, string& buttonName){
     }
 }
 
+int OP1::midiToKeyId(int midiId, string &keyName){
+    
+//    cout << "midi id is "<<midiId<<endl;
+    
+    int key = midiId-53;
+    
+    while (key<0||key>23) {
+        if(key<0) key+= 24;
+        if(key>23) key-=24;
+    }
+    
+    int keyNum = -1;
+    keyName = "(Not Found)";
+    
+    
+     switch (key) {
+     //white keys
+     case 0:
+     keyNum = 0;
+     keyName = "F";
+     break;
+     case 2:
+     keyNum = 1;
+     keyName = "G";
+     break;
+     case 4:
+     keyNum = 2;
+     keyName = "A";
+     break;
+     case 6:
+     keyNum = 3;
+     keyName = "B";
+     break;
+     case 7:
+     keyNum = 4;
+     keyName = "C";
+     break;
+     case 9:
+     keyNum = 5;
+     keyName = "D";
+     break;
+     case 11:
+     keyNum = 6;
+     keyName = "E";
+     break;
+     case 12:
+     keyNum = 7;
+     keyName = "F";
+     break;
+     case 14:
+     keyNum = 8;
+     keyName = "G";
+     break;
+     case 16:
+     keyNum = 9;
+     keyName = "A";
+     break;
+     case 18:
+     keyNum = 10;
+     keyName = "B";
+     break;
+     case 19:
+     keyNum = 11;
+     keyName = "C";
+     break;
+     case 21:
+     keyNum = 12;
+     keyName = "D";
+     break;
+     case 23:
+     keyNum = 13;
+     keyName = "E";
+     break;
+     
+     //black keys
+     
+     case 1:
+     keyNum = 14;
+     keyName = "F#";
+     break;
+     case 3:
+     keyNum = 15;
+     keyName = "G#";
+     break;
+     case 5:
+     keyNum = 16;
+     keyName = "A#";
+     break;
+     case 8:
+     keyNum = 17;
+     keyName = "C#";
+     break;
+     case 10:
+     keyNum = 18;
+     keyName = "D#";
+     break;
+     case 13:
+     keyNum = 19;
+     keyName = "F#";
+     break;
+     case 15:
+     keyNum = 20;
+     keyName = "G#";
+     break;
+     case 17:
+     keyNum = 21;
+     keyName = "A#";
+     break;
+     case 20:
+     keyNum = 22;
+     keyName = "C#";
+     break;
+     case 22:
+     keyNum = 23;
+     keyName = "D#";
+     break;
+     
+     default:
+     //            cout <<"key not found\n";
+     break;
+     }
+    
+//    cout << "key id is "<<key<<endl;
+    
+    return keyNum;
+    
+}
+
 void OP1::keyEvent(int key, bool keyDown, string& keyName){
     int keyNum = -1; //changing midi id's to graphical ids
     
@@ -916,112 +1044,8 @@ void OP1::keyEvent(int key, bool keyDown, string& keyName){
 //        cout << "A pressed\n";
 //    }
     
-    switch (key) {
-            //white keys
-        case 53:
-            keyNum = 0;
-            keyName = "F";
-            break;
-        case 55:
-            keyNum = 1;
-            keyName = "G";
-            break;
-        case 57:
-            keyNum = 2;
-            keyName = "A";
-            break;
-        case 59:
-            keyNum = 3;
-            keyName = "B";
-            break;
-        case 60:
-            keyNum = 4;
-            keyName = "C";
-            break;
-        case 62:
-            keyNum = 5;
-            keyName = "D";
-            break;
-        case 64:
-            keyNum = 6;
-            keyName = "E";
-            break;
-        case 65:
-            keyNum = 7;
-            keyName = "F";
-            break;
-        case 67:
-            keyNum = 8;
-            keyName = "G";
-            break;
-        case 69:
-            keyNum = 9;
-            keyName = "A";
-            break;
-        case 71:
-            keyNum = 10;
-            keyName = "B";
-            break;
-        case 72:
-            keyNum = 11;
-            keyName = "C";
-            break;
-        case 74:
-            keyNum = 12;
-            keyName = "D";
-            break;
-        case 76:
-            keyNum = 13;
-            keyName = "E";
-            break;
-            
-            //black keys
-            
-        case 54:
-            keyNum = 14;
-            keyName = "F#";
-            break;
-        case 56:
-            keyNum = 15;
-            keyName = "G#";
-            break;
-        case 58:
-            keyNum = 16;
-            keyName = "A#";
-            break;
-        case 61:
-            keyNum = 17;
-            keyName = "C#";
-            break;
-        case 63:
-            keyNum = 18;
-            keyName = "D#";
-            break;
-        case 66:
-            keyNum = 19;
-            keyName = "F#";
-            break;
-        case 68:
-            keyNum = 20;
-            keyName = "G#";
-            break;
-        case 70:
-            keyNum = 21;
-            keyName = "A#";
-            break;
-        case 73:
-            keyNum = 22;
-            keyName = "C#";
-            break;
-        case 75:
-            keyNum = 23;
-            keyName = "D#";
-            break;
-           
-        default:
-//            cout <<"key not found\n";
-            break;
-    }
+    keyNum = midiToKeyId(key, keyName);
+
     
     if (keyDown){
         changeKeyStatus(keyNum, keyDown);
@@ -1105,9 +1129,9 @@ void OP1::newVirtualMessageEvent (ofxMidiEventArgs & args){
     event = (status==144)?"key_down":"key_up";
     
     if (event=="key_down"){
-        sendNoteOn(byteOne, keyId);
+        sendNoteOn(byteOne);
     }else{
-        sendNoteOff(byteOne, keyId);
+        sendNoteOff(byteOne);
     }
     
     midiPacket newPacket;
@@ -1124,16 +1148,16 @@ void OP1::newVirtualMessageEvent (ofxMidiEventArgs & args){
 }
 
 
-void OP1::sendNoteOn(int noteId, int keyId){ //note is the absolute note id, key is remapped notes to fit the length of the keyboard
+void OP1::sendNoteOn(int noteId){ //note is the absolute note id, key is remapped notes to fit the length of the keyboard
     midiOut.sendNoteOn(1, noteId, 144);
     string name;
-    keyEvent(keyId, true, name);
+    keyEvent(noteId, true, name);
 }
 
-void OP1::sendNoteOff(int noteId, int keyId){
+void OP1::sendNoteOff(int noteId){
     midiOut.sendNoteOff(1, noteId, 128);
     string name;
-    keyEvent(keyId, false, name);
+    keyEvent(noteId, false, name);
 }
 
 void OP1::mouseDown(int x, int y){
@@ -1144,7 +1168,7 @@ void OP1::mouseDown(int x, int y){
 
 void OP1::mouseUp(){
     
-    sendNoteOff(currentNotePlaying, currentNotePlaying);
+    sendNoteOff(currentNotePlaying);
     currentNotePlaying = -1;
 }
 
@@ -1175,7 +1199,7 @@ void OP1::handleKeystrokes(){
         
             if (cursorInBoundingBox(50.5+i*15.5, 66, 14.5, 30)){
                 currentNotePlaying = keyMap[keyNumber];
-                sendNoteOn(currentNotePlaying, currentNotePlaying);
+                sendNoteOn(currentNotePlaying);
             }
         
         keyNumber++;
@@ -1189,7 +1213,7 @@ void OP1::handleKeystrokes(){
         
         if (cursorInBoundingBox(50.5+xOffset, 50.5, keyWidth, 15.5)){
             currentNotePlaying = keyMap[keyNumber];
-            sendNoteOn(currentNotePlaying, currentNotePlaying);
+            sendNoteOn(currentNotePlaying);
         }
         
         if (i==2||i==7){
