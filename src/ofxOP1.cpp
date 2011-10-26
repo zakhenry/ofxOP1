@@ -74,6 +74,8 @@ OP1::OP1(){ // constructor
     
     ofAddListener(internalMidi.newMessageEvent, this, &OP1::newVirtualMessageEvent); //send data to same callback as the external midi in
     
+    octaveOffset = 0;
+    
     for (int i=0; i<34; i++){
         buttonStatus.push_back(false);
     }
@@ -146,28 +148,28 @@ OP1::OP1(){ // constructor
     
     controlButton one;
     one.name = "One";
-    one.midiId = -1;
+    one.midiId = 11;
     one.graphicId = 6;
     one.icon.loadImage("one.png");
     controlButtons.push_back(one);
     
     controlButton two;
     two.name = "Two";
-    two.midiId = -1;
+    two.midiId = 12;
     two.graphicId = 7;
     two.icon.loadImage("two.png");
     controlButtons.push_back(two);
     
     controlButton three;
     three.name = "Three";
-    three.midiId = -1;
+    three.midiId = 13;
     three.graphicId = 8;
     three.icon.loadImage("three.png");
     controlButtons.push_back(three);
     
     controlButton four;
     four.name = "Four";
-    four.midiId = -1;
+    four.midiId = 14;
     four.graphicId = 9;
     four.icon.loadImage("four.png");
     controlButtons.push_back(four);
@@ -900,6 +902,21 @@ void OP1::buttonEvent(int button, bool buttonDown, string& buttonName){
         }
     }
     
+    if (buttonDown&&(button==41||button==42)){
+        
+        if(button==41&&octaveOffset>(-4)){
+            octaveOffset-=1;
+        }
+        
+        if(button==42&&octaveOffset<4){
+            octaveOffset+=1;
+        }
+        
+        cout << "octave offset is now: "<<octaveOffset<<endl;
+        
+        
+    }
+    
     if (buttonDown){
         changeButtonStatus(buttonNum, buttonDown);
     }else{
@@ -1085,14 +1102,10 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
             event = (byteTwo==127)?"button_down":"button_up";
         }
     }else{ //keyboard input?
-//        while (byteOne>64) { //octave shifting
-//            byteOne-=24;
-//            
-//        }
-//        
-//        while (byteOne<53) { //octave shifting
-//            byteOne+=24;
-//        }
+        
+        byteOne+=(12*octaveOffset); //octave shifting
+        
+        cout << "new keyboard output - note is: "<<byteOne<<endl;
         
         keyEvent(byteOne, status==144, elementName); //keyid keydown
         event = (status==144)?"key_down":"key_up";
@@ -1107,7 +1120,7 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
     
     ofNotifyEvent(midiEvent, newPacket, this);
     
-//        cout << "midi packet: port ["<<port<<"], channel ["<<channel<<"], status ["<<status<<"], byteOne ["<<byteOne<<"], byte2 ["<<byteTwo<<"], timestamp ["<<timestamp<<"]\n";
+        cout << "midi packet: port ["<<port<<"], channel ["<<channel<<"], status ["<<status<<"], byteOne ["<<byteOne<<"], byte2 ["<<byteTwo<<"], timestamp ["<<timestamp<<"]\n";
 
 }
 

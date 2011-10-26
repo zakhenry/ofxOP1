@@ -147,6 +147,8 @@ class OP1 : public ofBaseApp{
     OP1(); //constructor
     ~OP1(); //destructor
     
+    int octaveOffset;
+    
     int blue, green, lightGrey, orange, darkGrey, black, white;
     
     void draw();
