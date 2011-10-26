@@ -1105,7 +1105,7 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
         
         byteOne+=(12*octaveOffset); //octave shifting
         
-        cout << "new keyboard output - note is: "<<byteOne<<endl;
+//        cout << "new keyboard output - note is: "<<byteOne<<endl;
         
         keyEvent(byteOne, status==144, elementName); //keyid keydown
         event = (status==144)?"key_down":"key_up";
@@ -1120,7 +1120,7 @@ void OP1::newMessageEvent (ofxMidiEventArgs & args){
     
     ofNotifyEvent(midiEvent, newPacket, this);
     
-        cout << "midi packet: port ["<<port<<"], channel ["<<channel<<"], status ["<<status<<"], byteOne ["<<byteOne<<"], byte2 ["<<byteTwo<<"], timestamp ["<<timestamp<<"]\n";
+//        cout << "midi packet: port ["<<port<<"], channel ["<<channel<<"], status ["<<status<<"], byteOne ["<<byteOne<<"], byte2 ["<<byteTwo<<"], timestamp ["<<timestamp<<"]\n";
 
 }
 
